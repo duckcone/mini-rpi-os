@@ -1,3 +1,5 @@
+#include "io.h"
+
 // GPIO
 
 enum {
