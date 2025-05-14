@@ -80,3 +80,7 @@ void uart_send_string(char *str) {
     }
 
 }
+
+void putc(void *p, char c) {
+    uart_send(c);
+}

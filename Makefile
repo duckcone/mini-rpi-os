@@ -6,7 +6,8 @@ LD = aarch64-linux-gnu-ld
 OBJCOPY = aarch64-linux-gnu-objcopy
 
 # Compiler flags
-CFLAGS = -Wall -g -O0 -ffreestanding -nostdinc -nostdlib -nostartfiles -mstrict-align -Iinclude
+# CFLAGS = -Wall -g -O0 -ffreestanding -nostdinc -nostdlib -nostartfiles -mstrict-align -Iinclude
+CFLAGS = -Wall -g -O0 -ffreestanding -nostdlib -nostartfiles -mstrict-align -Iinclude
 LDFLAGS = -nostdlib -T src/link.ld
 
 # Directories
