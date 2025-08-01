@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "base.h": "c",
-        "uart.h": "c",
-        "stdarg.h": "c"
-    }
-}
