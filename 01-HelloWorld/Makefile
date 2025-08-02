@@ -1,12 +1,13 @@
 # Project Makefile
 
 # Toolchain prefix and compiler options
-GCC = aarch64-linux-gnu-gcc
-LD = aarch64-linux-gnu-ld
-OBJCOPY = aarch64-linux-gnu-objcopy
+ARMGNU ?= aarch64-linux-gnu
+# GCC = aarch64-linux-gnu-gcc
+# LD = aarch64-linux-gnu-ld
+# OBJCOPY = aarch64-linux-gnu-objcopy
 
 # Compiler flags
-CFLAGS = -Wall -O2 -ffreestanding -nostdinc -nostdlib -nostartfiles -mstrict-align -Iinclude
+CFLAGS = -Wall -O0 -ffreestanding -nostdinc -nostdlib -nostartfiles -mstrict-align -Iinclude
 LDFLAGS = -nostdlib -T src/link.ld
 
 # Directories
@@ -27,16 +28,16 @@ all: kernel8.img
 # Rule to build boot.o and C/ASM object files
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(BUILD_DIR)
-	$(GCC) $(CFLAGS) -c $< -o $@
+	$(ARMGNU)-gcc $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.s
 	mkdir -p $(BUILD_DIR)
-	$(GCC) $(CFLAGS) -c $< -o $@
+	$(ARMGNU)-gcc $(CFLAGS) -c $< -o $@
 
 # Link and generate kernel8.img
 kernel8.img: $(OBJS)
-	$(LD) $(OBJS) $(LDFLAGS) -o $(BUILD_DIR)/kernel8.elf
-	$(OBJCOPY) -O binary $(BUILD_DIR)/kernel8.elf kernel8.img
+	$(ARMGNU)-ld $(OBJS) $(LDFLAGS) -o $(BUILD_DIR)/kernel8.elf
+	$(ARMGNU)-objcopy -O binary $(BUILD_DIR)/kernel8.elf kernel8.img
 
 # Clean build output
 clean:
