@@ -15,8 +15,6 @@ unsigned long get_el_level(void) {
 
 void main() {
     uart_init();
-
-    uart_send_string("hello world!!!\n");
     
     init_printf(0, putc);
 
