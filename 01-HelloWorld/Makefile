@@ -7,7 +7,7 @@ ARMGNU ?= aarch64-linux-gnu
 # OBJCOPY = aarch64-linux-gnu-objcopy
 
 # Compiler flags
-CFLAGS = -Wall -O0 -ffreestanding -nostdinc -nostdlib -nostartfiles -mstrict-align -Iinclude
+CFLAGS = -Wall -g -O0 -ffreestanding -nostdlib -nostartfiles -mstrict-align -Iinclude
 LDFLAGS = -nostdlib -T src/link.ld
 
 # Directories
@@ -44,4 +44,7 @@ clean:
 	rm -rf $(BUILD_DIR) *.img
 
 run:
-	qemu-system-aarch64 -M raspi4b -serial null -serial stdio -display none  -kernel kernel8.img
+	qemu-system-aarch64 -M raspi4b -serial null -serial stdio -display none -kernel kernel8.img
+
+debug:
+	qemu-system-aarch64 -M raspi4b -serial null -serial stdio -display none -kernel $(BUILD_DIR)/kernel8.elf -S -s
