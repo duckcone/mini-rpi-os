@@ -20,14 +20,14 @@ master: // We're in the main core!
     ldr x1, =__bss_start // Start address
     ldr w2, =__bss_size // Size of the section
 
-memzero:
-    cbz w2, 4f
+clean_bss:
+    cbz w2, kernel_main
     str xzr, [x1], #8
     sub w2, w2, #1
-    cbnz w2, memzero
+    cbnz w2, clean_bss
 
     // Jump to our main() routine in C (make sure it doesn't return)
-4: bl main
+kernel_main: bl main
     // In case it does return, halt the master core too
     b proc_hang
 
