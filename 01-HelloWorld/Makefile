@@ -17,9 +17,9 @@ INCLUDE_DIR = include
 
 # Source and object files
 CFILES = $(wildcard $(SRC_DIR)/*.c)
-SFILES = $(wildcard $(SRC_DIR)/*.s)
+SFILES = $(wildcard $(SRC_DIR)/*.S)
 COBJS = $(CFILES:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
-SOBJS = $(SFILES:$(SRC_DIR)/%.s=$(BUILD_DIR)/%.o)
+SOBJS = $(SFILES:$(SRC_DIR)/%.S=$(BUILD_DIR)/%.o)
 OBJS = $(COBJS) $(SOBJS)
 
 # Final target
@@ -30,7 +30,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(BUILD_DIR)
 	$(ARMGNU)-gcc $(CFLAGS) -c $< -o $@
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.s
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.S
 	mkdir -p $(BUILD_DIR)
 	$(ARMGNU)-gcc $(CFLAGS) -c $< -o $@
 
