@@ -3,11 +3,17 @@
 A mini OS for Raspberry Pi 4B
 
 ## Requirement
+### QEMU
+- QEMU: 10.2.1
 
-- QEMU: 9.2.0
-- aarch64-linux-gnu-gcc: 13.3.0
-- aarch64-linux-gnu-ld: 2.42
-- aarch64-linux-gnu-objcopy: 2.42
+```
+$ qemu-system-aarch64 -M help
+raspi4b              Raspberry Pi 4B (revision 1.5)
+```
+### ARM GNU Toolchain (15.2.Rel1)
+- aarch64-nnone-elf-gcc: 15.2.1
+- aarch64-nnone-elf-ld: 2.45.1
+- aarch64-nnone-elf-objcopy: 2.45.1
 
 ## Build Image
 
