@@ -1,10 +1,10 @@
 # Project Makefile
 
 # Toolchain prefix and compiler options
-ARMGNU ?= aarch64-linux-gnu
-# GCC = aarch64-linux-gnu-gcc
-# LD = aarch64-linux-gnu-ld
-# OBJCOPY = aarch64-linux-gnu-objcopy
+ARMGNU ?= aarch64-none-elf
+# GCC = aarch64-none-elf-gcc
+# LD = aarch64-none-elf-ld
+# OBJCOPY = aarch64-none-elf-objcopy
 
 # Compiler flags
 CFLAGS = -Wall -g -O0 -ffreestanding -nostdlib -nostartfiles -mstrict-align -Iinclude
