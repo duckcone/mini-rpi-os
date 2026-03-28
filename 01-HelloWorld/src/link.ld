@@ -1,46 +1,40 @@
 SECTIONS
 {
-    /* Kernel load address for AArch64 */
+    /* Kernel load address for Rpi 4B (AArch64) */
     . = 0x80000;
 
     /* Text section, include boot code */
-    .text : {
-        KEEP(*(.text.boot));
-        *(.text .text.* .gnu.linkonce.t*);
+    .text : ALIGN(16) {
+        KEEP(*(.text.boot))
+        *(.text)
+        *(.text.*)
+        
     }
 
     /* Read-only data */
-    .rodata : {
-        *(.rodata .rodata.* .gnu.linkonce.r*);
+    .rodata : ALIGN(16) {
+        *(.rodata);
+        *(.rodata.*);
     }
-
-    /* Provide _data symbol at this point */
-    PROVIDE(_data = .);
 
     /* Data section */
-    .data : {
-        *(.data .data.* .gnu.linkonce.d*);
+    .data : ALIGN(16) {
+        __data_start = .;
+        *(.data)
+        *(.data.*)
+        __data_end = .;
     }
 
-    /* BSS section (uninitialized, no load) */
-    .bss (NOLOAD) : {
-        . = ALIGN(16);
+    /* BSS section */
+    .bss : ALIGN(16) {
         __bss_start = .;
         *(.bss .bss.*)
-        *(COMMON)
         __bss_end = .;
     }
 
-    /* End of kernel */
-    _end = .;
-
-    /* Discard unnecessary sections */
-    /DISCARD/ : {
-        *(.comment)
-        *(.gnu*)
-        *(.note*)
-        *(.eh_frame*)
-    }
+    . = ALIGN(16);
+    . += 128 * 1024; /* 128 KB */
+    _stack_top = .;
 }
 
 /* BSS size in 8-byte units */

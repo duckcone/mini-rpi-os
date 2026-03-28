@@ -13,22 +13,23 @@ proc_hang: wfe // We're not on the main core, so hang in an infinite wait loop
     b proc_hang
 
 master: // We're in the main core!
-    ldr x1, =_start
+    ldr x1, =_stack_top
     mov sp, x1
 
     // Clean the BSS section
     ldr x1, =__bss_start // Start address
-    ldr w2, =__bss_size // Size of the section
+    ldr x2, =__bss_size // Size of the section
 
 clean_bss:
-    cbz w2, kernel_main
+    cbz x2, kernel_main
     str xzr, [x1], #8
-    sub w2, w2, #1
-    cbnz w2, clean_bss
+    sub x2, x2, #1
+    cbnz x2, clean_bss
 
     // Jump to our main() routine in C (make sure it doesn't return)
-kernel_main: bl main
-    // In case it does return, halt the master core too
+kernel_main:
+    bl main
+    // In case it does return, halt the master core tooldr x1, =_sbss
     b proc_hang
 
 

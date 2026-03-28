@@ -38,6 +38,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.S
 kernel8.img: $(OBJS)
 	$(ARMGNU)-ld $(OBJS) $(LDFLAGS) -o $(BUILD_DIR)/kernel8.elf
 	$(ARMGNU)-objcopy -O binary $(BUILD_DIR)/kernel8.elf kernel8.img
+	$(ARMGNU)-objdump -D $(BUILD_DIR)/kernel8.elf > $(BUILD_DIR)/kernel8.lst
 
 # Clean build output
 clean:
