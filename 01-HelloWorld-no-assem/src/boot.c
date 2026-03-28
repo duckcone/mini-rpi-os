@@ -4,15 +4,27 @@
 extern char __bss_start[];
 extern char __bss_end[];
 
+/* 提供一個簡單的 stack */
+__attribute__((section(".stack")))
+static char stack[16 * 1024];
+__attribute__((used))
+void *__stack_top = stack + sizeof(stack);
+
 void kernel_main(void);
 
-__attribute__((naked, section(".text.boot")))
+__attribute__((section(".text.boot")))
 void boot(void) {
     __asm__ __volatile__(
-        "ldr x0, =__stack_top    \n"  // 設定 SP
-        "mov sp, x0              \n"
-        "bl kernel_main          \n"  // 呼叫 C 的 main
-        "b .                     \n"  // 死迴圈避免返回
+        "mrs x1, mpidr_el1       \n\t"
+        "and x1, x1, #0xff       \n\t"
+        "cbnz x1, 1f             \n\t"   // 非 core0 去 1
+        "mov sp, %[stack_top]    \n\t"
+        "bl kernel_main          \n\t"
+        "1:                      \n\t"
+        "wfe                     \n\t"
+        "b 1b                    \n\t"
+        :
+        : [stack_top] "r" (__stack_top)
     );
 }
 
@@ -28,8 +40,3 @@ void kernel_main(void) {
     main();
 }
 
-/* 提供一個簡單的 stack */
-__attribute__((section(".bss")))
-static char stack[16 * 1024];
-__attribute__((used))
-void *__stack_top = stack + sizeof(stack);

@@ -1,6 +1,6 @@
 # Project Makefile
 
-ARMGNU ?= aarch64-linux-gnu
+ARMGNU ?= aarch64-none-elf
 
 CFLAGS = -Wall -g -O0 -ffreestanding -nostdlib -nostartfiles -mstrict-align -Iinclude
 LDFLAGS = -nostdlib -T src/link.ld
