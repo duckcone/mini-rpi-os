@@ -34,7 +34,7 @@ SECTIONS
 
     . = ALIGN(16);
     . += 128 * 1024; /* 128 KB */
-    _stack_top = .;
+    __stack_top = .;
 }
 
 /* BSS size in 8-byte units */

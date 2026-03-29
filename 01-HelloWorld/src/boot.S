@@ -13,7 +13,7 @@ proc_hang: wfe // We're not on the main core, so hang in an infinite wait loop
     b proc_hang
 
 master: // We're in the main core!
-    ldr x1, =_stack_top
+    ldr x1, =__stack_top
     mov sp, x1
 
     // Clean the BSS section
